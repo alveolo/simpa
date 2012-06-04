@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<!-- Checking for updates: -->
+	<!-- mvn versions:display-plugin-updates -->
+	<!-- mvn versions:display-dependency-updates -->
+	<!-- mvn versions:display-property-updates -->
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>simpa-spring</artifactId>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.alveolo.simpa</groupId>
+		<artifactId>simpa</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+
+	<name>SimPA Spring - Simple Persistence API for Java</name>
+	<description>Simple predictable JDBC query framework based on JPA annotations</description>
+	<url>https://github.com/alveolo/simpa</url>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:git@github.com:alveolo/simpa.git</connection>
+		<developerConnection>scm:git:git@github.com:alveolo/simpa.git</developerConnection>
+		<url>git@github.com:alveolo/simpa.git</url>
+	</scm>
+
+	<developers>
+		<developer>
+			<name>Igor Malinin</name>
+			<email>igorzep@gmail.com</email>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.alveolo.simpa</groupId>
+			<artifactId>simpa-core</artifactId>
+			<version>0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>
