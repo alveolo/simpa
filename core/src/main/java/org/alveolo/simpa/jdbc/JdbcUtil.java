@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Calendar;
 
 import javax.persistence.EnumType;
@@ -24,32 +25,56 @@ public class JdbcUtil {
 		Object jdbcValue = (attribute == null) ? value : getJdbcValue(attribute, value);
 
 		if (jdbcType.isAssignableFrom(String.class)) {
-			stmt.setString(index, (String) jdbcValue);
+			if (value == null) {
+				stmt.setNull(index, Types.VARCHAR);
+			} else {
+				stmt.setString(index, (String) jdbcValue);
+			}
 			return;
 		}
 
 		if (jdbcType == Long.TYPE || jdbcType.isAssignableFrom(Long.class)) {
-			stmt.setLong(index, (long) jdbcValue);
+			if (value == null) {
+				stmt.setNull(index, Types.BIGINT);
+			} else {
+				stmt.setLong(index, (long) jdbcValue);
+			}
 			return;
 		}
 
 		if (jdbcType == Integer.TYPE || jdbcType.isAssignableFrom(Integer.class)) {
-			stmt.setInt(index, (int) jdbcValue);
+			if (value == null) {
+				stmt.setNull(index, Types.INTEGER);
+			} else {
+				stmt.setInt(index, (int) jdbcValue);
+			}
 			return;
 		}
 
 		if (jdbcType == Short.TYPE || jdbcType.isAssignableFrom(Short.class)) {
-			stmt.setShort(index, (short) jdbcValue);
+			if (value == null) {
+				stmt.setNull(index, Types.SMALLINT);
+			} else {
+				stmt.setShort(index, (short) jdbcValue);
+			}
 			return;
 		}
 
 		if (jdbcType == Byte.TYPE || jdbcType.isAssignableFrom(Byte.class)) {
-			stmt.setByte(index, (byte) jdbcValue);
+			if (value == null) {
+				stmt.setNull(index, Types.TINYINT);
+			} else {
+				stmt.setByte(index, (byte) jdbcValue);
+			}
 			return;
 		}
 
 		if (jdbcType == Boolean.TYPE || jdbcType.isAssignableFrom(Boolean.class)) {
-			stmt.setBoolean(index, (Boolean) jdbcValue);
+			if (value == null) {
+				stmt.setNull(index, Types.BOOLEAN);
+			} else {
+				stmt.setBoolean(index, (Boolean) jdbcValue);
+			}
 			return;
 		}
 
@@ -69,6 +94,10 @@ public class JdbcUtil {
 		}
 
 		stmt.setObject(index, jdbcValue);
+	}
+
+	public static Object getValue(ResultSet rset, int index, Attribute<?, ?> attribute) throws SQLException {
+		return getValue(rset, index, getJdbcType(attribute));
 	}
 
 	public static Object getValue(ResultSet rset, int index, Class<?> jdbcType) throws SQLException {

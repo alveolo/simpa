@@ -65,7 +65,7 @@ public class JdbcRowMapperVisitor<T> implements SelectVisitor {
 
 				object = parent;
 			} else {
-				value = JdbcUtil.getValue(rset, ++index, JdbcUtil.getJdbcType(attribute));
+				value = JdbcUtil.getValue(rset, ++index, attribute);
 			}
 
 			Field field = (Field) attribute.getJavaMember(); // TODO: method

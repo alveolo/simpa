@@ -1,6 +1,7 @@
 package org.alveolo.simpa.test;
 
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,30 @@ public class SimpleTest extends AbstractQueryTest {
 	}
 
 	@Test
+	public void insertEntityWithNull() throws SQLException {
+		sql("SELECT nextval('sch_test.seq_simple')");
+		results();
+		next(); number(321L);
+		endQuery();
+
+		sql("INSERT INTO sch_test.tbl_simple (simple_id,simple_name) VALUES (?,?)");
+		param(321L);
+		paramNull(Types.VARCHAR);
+		endUpdate(1);
+
+		replay();
+
+		Simple entity = new Simple();
+		entity.setName(null);
+
+		es.insert(entity);
+
+		Assert.assertEquals(321L, entity.getId());
+
+		verify();
+	}
+
+	@Test
 	public void updateEntity() throws SQLException {
 		sql("UPDATE sch_test.tbl_simple SET simple_name=? WHERE simple_id=?");
 		param("SimpleTest");
@@ -47,6 +72,24 @@ public class SimpleTest extends AbstractQueryTest {
 		Simple entity = new Simple();
 		entity.setId(123L);
 		entity.setName("SimpleTest");
+
+		es.update(entity);
+
+		verify();
+	}
+
+	@Test
+	public void updateEntityWithNull() throws SQLException {
+		sql("UPDATE sch_test.tbl_simple SET simple_name=? WHERE simple_id=?");
+		paramNull(Types.VARCHAR);
+		param(123L);
+		endUpdate(1);
+
+		replay();
+
+		Simple entity = new Simple();
+		entity.setId(123L);
+		entity.setName(null);
 
 		es.update(entity);
 

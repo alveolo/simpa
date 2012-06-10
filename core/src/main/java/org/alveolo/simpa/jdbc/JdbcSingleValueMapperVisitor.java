@@ -65,7 +65,7 @@ public class JdbcSingleValueMapperVisitor<T> extends JdbcRowMapperVisitor<T> {
 
 				object = parent;
 			} else {
-				value = JdbcUtil.getValue(rset, ++index, JdbcUtil.getJdbcType(attribute));
+				value = JdbcUtil.getValue(rset, ++index, attribute);
 			}
 
 			if (object == null) {
@@ -86,9 +86,9 @@ public class JdbcSingleValueMapperVisitor<T> extends JdbcRowMapperVisitor<T> {
 			throw new IllegalStateException();
 		}
 
-		if (raw.javaType.getName().startsWith("java.")) {
+		if (simpleTypes.contains(raw.javaType)) {
 			try {
-				object = JdbcUtil.getValue(rset, ++index, javaType);
+				object = JdbcUtil.getValue(rset, ++index, raw.javaType);
 			} catch (SQLException e) {
 				throw new PersistenceException(e);
 			}

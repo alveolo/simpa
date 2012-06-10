@@ -51,6 +51,10 @@ public class AbstractQueryTest {
 		expect(conn.prepareStatement(sql)).andReturn(stmt);
 	}
 
+	protected void paramNull(int sqlType) throws SQLException {
+		stmt.setNull(++position, sqlType);
+	}
+
 	protected void param(String string) throws SQLException {
 		stmt.setString(++position, string);
 	}

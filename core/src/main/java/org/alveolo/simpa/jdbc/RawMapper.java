@@ -49,9 +49,9 @@ public class RawMapper<T> {
 
 	public void setEntityValues(ResultSet rset, T entity) throws SQLException, ReflectiveOperationException {
 		for (int i = 0; i < attributes.size(); i++) {
-			Attribute<? super T, ?> attr = attributes.get(i);
-			Field field = (Field) attr.getJavaMember();
-			field.set(entity, JdbcUtil.getValue(rset, i+1, JdbcUtil.getJdbcType(attr)));
+			Attribute<? super T, ?> attribute = attributes.get(i);
+			Field field = (Field) attribute.getJavaMember();
+			field.set(entity, JdbcUtil.getValue(rset, i+1, attribute));
 		}
 	}
 }
