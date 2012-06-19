@@ -414,7 +414,7 @@ public class JdbcStore implements EntityStore, RawCallbacks, QueryCallbacks {
 			sql.append(" OFFSET " + query.offset);
 		}
 
-		if (query.offset != null) {
+		if (query.fetch != null) {
 			sql.append(" LIMIT " + query.fetch);
 		}
 
