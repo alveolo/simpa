@@ -7,19 +7,54 @@ import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
 import javax.persistence.Embeddable;
-import javax.persistence.metamodel.Attribute;
-import javax.persistence.metamodel.ManagedType;
 
 
-public class AttributeImpl<X, Y> implements Attribute<X, Y> {
-	protected final ManagedTypeImpl<X> declaringType;
+public class Attribute<X, Y> {
+	public static enum PersistentAttributeType {
+		/**
+		 * Many-to-one association
+		 */
+		MANY_TO_ONE,
+
+		/**
+		 * One-to-one association
+		 */
+		ONE_TO_ONE,
+
+		/**
+		 * Basic attribute
+		 */
+		BASIC,
+
+		/**
+		 * Embeddable class attribute
+		 */
+		EMBEDDED,
+
+		/**
+		 * Many-to-many association
+		 */
+		MANY_TO_MANY,
+
+		/**
+		 * One-to-many association
+		 */
+		ONE_TO_MANY,
+
+		/**
+		 * Element collection
+		 */
+		ELEMENT_COLLECTION
+	}
+
+	protected final ManagedType<X> declaringType;
 	protected final Member javaMember;
 	protected final String name;
 	protected final Class<Y> javaType;
 	protected final PersistentAttributeType persistentAttributeType;
 
 	@SuppressWarnings("unchecked")
-	public AttributeImpl(ManagedTypeImpl<X> declaringType, Member javaMember) {
+	public Attribute(ManagedType<X> declaringType, Member javaMember) {
 		this.declaringType = declaringType;
 		this.javaMember = javaMember;
 
@@ -46,45 +81,28 @@ public class AttributeImpl<X, Y> implements Attribute<X, Y> {
 		}
 	}
 
-	protected MetamodelImpl getMetamodel() {
+	protected Metamodel getMetamodel() {
 		return declaringType.getMetamodel();
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
 
-	@Override
 	public PersistentAttributeType getPersistentAttributeType() {
 		return persistentAttributeType;
 	}
 
-	@Override
 	public ManagedType<X> getDeclaringType() {
 		return declaringType;
 	}
 
-	@Override
 	public Class<Y> getJavaType() {
 		return javaType;
 	}
 
-	@Override
 	public Member getJavaMember() {
 		return javaMember;
-	}
-
-	@Override
-	public boolean isAssociation() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isCollection() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {

@@ -4,12 +4,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.metamodel.Attribute;
-import javax.persistence.metamodel.Attribute.PersistentAttributeType;
-import javax.persistence.metamodel.ManagedType;
-
 import org.alveolo.simpa.jdbc.QueryCallbacks;
-import org.alveolo.simpa.metamodel.SingularAttributeImpl;
+import org.alveolo.simpa.metamodel.Attribute;
+import org.alveolo.simpa.metamodel.Attribute.PersistentAttributeType;
+import org.alveolo.simpa.metamodel.ManagedType;
+import org.alveolo.simpa.metamodel.SingularAttribute;
 import org.alveolo.simpa.util.EntityUtil;
 
 
@@ -37,7 +36,7 @@ public abstract class BaseJunctionBuilder<B extends BaseJunctionBuilder<B, T>, T
 
 	public <Y> B eq(Attribute<?, Y> attribute, Object value) {
 		if (attribute.getPersistentAttributeType() == PersistentAttributeType.EMBEDDED) {
-			SingularAttributeImpl<?, Y> singular = (SingularAttributeImpl<?, Y>) attribute;
+			SingularAttribute<?, Y> singular = (SingularAttribute<?, Y>) attribute;
 			ManagedType<Y> type = (ManagedType<Y>) singular.getType();
 
 			@SuppressWarnings("unchecked")
@@ -58,7 +57,7 @@ public abstract class BaseJunctionBuilder<B extends BaseJunctionBuilder<B, T>, T
 
 	public <Y> B neq(Attribute<?, Y> attribute, Object value) {
 		if (attribute.getPersistentAttributeType() == PersistentAttributeType.EMBEDDED) {
-			SingularAttributeImpl<?, Y> singular = (SingularAttributeImpl<?, Y>) attribute;
+			SingularAttribute<?, Y> singular = (SingularAttribute<?, Y>) attribute;
 			ManagedType<Y> type = (ManagedType<Y>) singular.getType();
 
 			@SuppressWarnings("unchecked")

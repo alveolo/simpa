@@ -1,6 +1,6 @@
 package org.alveolo.simpa.query;
 
-import javax.persistence.metamodel.Attribute;
+import org.alveolo.simpa.metamodel.Attribute;
 
 
 public class IsNotNullCondition implements Condition {

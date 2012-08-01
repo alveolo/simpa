@@ -9,12 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.PersistenceException;
 import javax.persistence.Temporal;
 import javax.persistence.Version;
-import javax.persistence.metamodel.SingularAttribute;
-import javax.persistence.metamodel.Type;
 
 
-public class SingularAttributeImpl<X, T> extends AttributeImpl<X, T> implements SingularAttribute<X, T> {
-	public SingularAttributeImpl(ManagedTypeImpl<X> declaringType, Member javaMember) {
+public class SingularAttribute<X, T> extends Attribute<X, T> implements Bindable<T> {
+	public SingularAttribute(ManagedType<X> declaringType, Member javaMember) {
 		super(declaringType, javaMember);
 
 		Temporal temporal = getAnnotation(Temporal.class);
@@ -39,23 +37,19 @@ public class SingularAttributeImpl<X, T> extends AttributeImpl<X, T> implements 
 		return getJavaType();
 	}
 
-	@Override
 	public boolean isId() {
 		return getAnnotation(Id.class) != null || getAnnotation(EmbeddedId.class) != null;
 	}
 
-	@Override
 	public boolean isVersion() {
 		return getAnnotation(Version.class) != null;
 	}
 
-	@Override
 	public boolean isOptional() {
 		Column column = getAnnotation(Column.class);
 		return (column == null) ? true : column.nullable();
 	}
 
-	@Override
 	public Type<T> getType() {
 		// TODO: association entity types
 
@@ -63,6 +57,6 @@ public class SingularAttributeImpl<X, T> extends AttributeImpl<X, T> implements 
 			return getMetamodel().embeddable(javaType);
 		}
 
-		return new BasicTypeImpl<>(javaType);
+		return new BasicType<>(javaType);
 	}
 }

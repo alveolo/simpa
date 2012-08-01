@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.PersistenceException;
-import javax.persistence.metamodel.Attribute;
 
-import org.alveolo.simpa.metamodel.EntityTypeImpl;
+import org.alveolo.simpa.metamodel.Attribute;
+import org.alveolo.simpa.metamodel.EntityType;
 
 
 public class RawMapper<T> {
@@ -21,7 +21,7 @@ public class RawMapper<T> {
 	private final List<Attribute<? super T, ?>> attributes;
 
 	public RawMapper(ResultSetMetaData meta, Class<T> javaType) throws SQLException {
-		EntityTypeImpl<T> type = new EntityTypeImpl<>(null, javaType, null);
+		EntityType<T> type = new EntityType<>(null, javaType, null);
 
 		Map<String, Attribute<? super T, ?>> columns = new HashMap<>();
 		for (Attribute<? super T, ?> attr : type.getAttributes()) {

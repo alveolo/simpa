@@ -4,11 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import javax.persistence.PersistenceException;
-import javax.persistence.metamodel.Attribute;
-import javax.persistence.metamodel.Attribute.PersistentAttributeType;
-import javax.persistence.metamodel.ManagedType;
 
-import org.alveolo.simpa.metamodel.SingularAttributeImpl;
+import org.alveolo.simpa.metamodel.Attribute;
+import org.alveolo.simpa.metamodel.Attribute.PersistentAttributeType;
+import org.alveolo.simpa.metamodel.ManagedType;
+import org.alveolo.simpa.metamodel.SingularAttribute;
 import org.alveolo.simpa.query.AttrCondition;
 import org.alveolo.simpa.query.AttrGroup;
 import org.alveolo.simpa.query.AttrOrder;
@@ -70,7 +70,7 @@ public class JdbcSetParameterVisitor implements ConditionVisitor, GroupVisitor, 
 	private <Y> void setParameter(Attribute<?, Y> attribute, Object value) {
 		try {
 			if (attribute.getPersistentAttributeType() == PersistentAttributeType.EMBEDDED) {
-				SingularAttributeImpl<?, Y> singular = (SingularAttributeImpl<?, Y>) attribute;
+				SingularAttribute<?, Y> singular = (SingularAttribute<?, Y>) attribute;
 				ManagedType<Y> type = (ManagedType<Y>) singular.getType();
 
 				for (Attribute<? super Y, ?> a : type.getAttributes()) {

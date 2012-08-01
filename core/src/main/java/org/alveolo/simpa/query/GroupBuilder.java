@@ -1,11 +1,10 @@
 package org.alveolo.simpa.query;
 
-import javax.persistence.metamodel.Attribute;
-import javax.persistence.metamodel.Attribute.PersistentAttributeType;
-import javax.persistence.metamodel.ManagedType;
-
 import org.alveolo.simpa.jdbc.QueryCallbacks;
-import org.alveolo.simpa.metamodel.SingularAttributeImpl;
+import org.alveolo.simpa.metamodel.Attribute;
+import org.alveolo.simpa.metamodel.Attribute.PersistentAttributeType;
+import org.alveolo.simpa.metamodel.ManagedType;
+import org.alveolo.simpa.metamodel.SingularAttribute;
 
 
 public class GroupBuilder<T> extends BaseSelectableBuilder<T> {
@@ -19,7 +18,7 @@ public class GroupBuilder<T> extends BaseSelectableBuilder<T> {
 
 	private <Y> GroupBuilder<T> group(Attribute<?, Y> attribute) {
 		if (attribute.getPersistentAttributeType() == PersistentAttributeType.EMBEDDED) {
-			SingularAttributeImpl<?, Y> singular = (SingularAttributeImpl<?, Y>) attribute;
+			SingularAttribute<?, Y> singular = (SingularAttribute<?, Y>) attribute;
 			ManagedType<Y> type = (ManagedType<Y>) singular.getType();
 
 			for (Attribute<? super Y, ?> a : type.getAttributes()) {

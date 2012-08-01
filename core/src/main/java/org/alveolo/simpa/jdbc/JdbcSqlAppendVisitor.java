@@ -5,11 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.metamodel.Attribute;
-import javax.persistence.metamodel.Attribute.PersistentAttributeType;
-import javax.persistence.metamodel.ManagedType;
-
-import org.alveolo.simpa.metamodel.SingularAttributeImpl;
+import org.alveolo.simpa.metamodel.Attribute;
+import org.alveolo.simpa.metamodel.Attribute.PersistentAttributeType;
+import org.alveolo.simpa.metamodel.ManagedType;
+import org.alveolo.simpa.metamodel.SingularAttribute;
 import org.alveolo.simpa.query.AttrCondition;
 import org.alveolo.simpa.query.AttrGroup;
 import org.alveolo.simpa.query.AttrOrder;
@@ -48,7 +47,7 @@ public class JdbcSqlAppendVisitor implements SelectVisitor, ConditionVisitor, Gr
 		Attribute<?, ?> attribute = select.attribute;
 
 		if (attribute.getPersistentAttributeType() == PersistentAttributeType.EMBEDDED) {
-			SingularAttributeImpl singular = (SingularAttributeImpl) attribute;
+			SingularAttribute singular = (SingularAttribute) attribute;
 			ManagedType type = (ManagedType) singular.getType();
 			Set attributes = type.getAttributes();
 			for (Iterator<Attribute> i = attributes.iterator(); i.hasNext();) {
@@ -138,7 +137,7 @@ public class JdbcSqlAppendVisitor implements SelectVisitor, ConditionVisitor, Gr
 
 	private <Y> void collectColumnNames(List<String> names, Attribute<?, Y> attribute) {
 		if (attribute.getPersistentAttributeType() == PersistentAttributeType.EMBEDDED) {
-			SingularAttributeImpl<?, Y> singular = (SingularAttributeImpl<?, Y>) attribute;
+			SingularAttribute<?, Y> singular = (SingularAttribute<?, Y>) attribute;
 			ManagedType<Y> type = (ManagedType<Y>) singular.getType();
 
 			for (Attribute<? super Y, ?> a : type.getAttributes()) {

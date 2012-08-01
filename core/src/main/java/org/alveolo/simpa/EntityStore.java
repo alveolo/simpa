@@ -1,7 +1,6 @@
 package org.alveolo.simpa;
 
-import javax.persistence.metamodel.Metamodel;
-
+import org.alveolo.simpa.metamodel.Metamodel;
 import org.alveolo.simpa.query.SqlBuilder;
 import org.alveolo.simpa.query.WhereBuilder;
 

@@ -5,13 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.metamodel.Attribute;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.ManagedType;
-import javax.persistence.metamodel.SingularAttribute;
-
 import org.alveolo.simpa.Page;
 import org.alveolo.simpa.jdbc.QueryCallbacks;
+import org.alveolo.simpa.metamodel.Attribute;
+import org.alveolo.simpa.metamodel.EntityType;
+import org.alveolo.simpa.metamodel.ManagedType;
+import org.alveolo.simpa.metamodel.SingularAttribute;
 import org.alveolo.simpa.util.EntityUtil;
 
 

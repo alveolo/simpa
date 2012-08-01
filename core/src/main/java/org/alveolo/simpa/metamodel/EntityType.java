@@ -1,12 +1,10 @@
 package org.alveolo.simpa.metamodel;
 
-import javax.persistence.metamodel.EntityType;
 
-
-public class EntityTypeImpl<X> extends IdentifiableTypeImpl<X> implements EntityType<X> {
+public class EntityType<X> extends IdentifiableType<X> implements Bindable<X> {
 	private final String name;
 
-	public EntityTypeImpl(MetamodelImpl metamodel, Class<X> javaType, String name) {
+	public EntityType(Metamodel metamodel, Class<X> javaType, String name) {
 		super(metamodel, javaType);
 
 		this.name = (name == null) ? javaType.getSimpleName() : name;
@@ -22,7 +20,6 @@ public class EntityTypeImpl<X> extends IdentifiableTypeImpl<X> implements Entity
 		return javaType;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}

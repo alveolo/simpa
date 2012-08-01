@@ -1,6 +1,6 @@
 package org.alveolo.simpa.jdbc;
 
-import javax.persistence.metamodel.Attribute;
+import org.alveolo.simpa.metamodel.Attribute;
 
 
 public class AttributeValue {

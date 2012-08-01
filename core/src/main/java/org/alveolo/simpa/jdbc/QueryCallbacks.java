@@ -2,8 +2,7 @@ package org.alveolo.simpa.jdbc;
 
 import java.util.List;
 
-import javax.persistence.metamodel.Metamodel;
-
+import org.alveolo.simpa.metamodel.Metamodel;
 import org.alveolo.simpa.query.Query;
 
 

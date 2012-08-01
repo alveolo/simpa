@@ -8,11 +8,11 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.PersistenceException;
-import javax.persistence.metamodel.Attribute;
-import javax.persistence.metamodel.Attribute.PersistentAttributeType;
-import javax.persistence.metamodel.ManagedType;
 
-import org.alveolo.simpa.metamodel.SingularAttributeImpl;
+import org.alveolo.simpa.metamodel.Attribute;
+import org.alveolo.simpa.metamodel.Attribute.PersistentAttributeType;
+import org.alveolo.simpa.metamodel.ManagedType;
+import org.alveolo.simpa.metamodel.SingularAttribute;
 import org.alveolo.simpa.query.AttrSelect;
 import org.alveolo.simpa.query.RawSelect;
 
@@ -53,7 +53,7 @@ public class JdbcSingleValueMapperVisitor<T> extends JdbcRowMapperVisitor<T> {
 			Object value;
 
 			if (attribute.getPersistentAttributeType() == PersistentAttributeType.EMBEDDED) {
-				SingularAttributeImpl singular = (SingularAttributeImpl) attribute;
+				SingularAttribute singular = (SingularAttribute) attribute;
 				ManagedType<Object> type = (ManagedType<Object>) singular.getType();
 
 				Object parent = object;

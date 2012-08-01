@@ -12,18 +12,14 @@ import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PersistenceException;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.metamodel.EmbeddableType;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.ManagedType;
-import javax.persistence.metamodel.Metamodel;
-import javax.persistence.metamodel.Type.PersistenceType;
 
 import org.alveolo.simpa.jdbc.IdGenerator;
 import org.alveolo.simpa.jdbc.JdbcSequenceGenerator;
 import org.alveolo.simpa.jdbc.UuidGenerator;
+import org.alveolo.simpa.metamodel.Type.PersistenceType;
 
 
-public class MetamodelImpl implements Metamodel {
+public class Metamodel {
 	private final Map<Class<?>, ManagedType<?>> managedTypeMap;
 
 	private final Set<ManagedType<?>> managedTypes;
@@ -32,7 +28,7 @@ public class MetamodelImpl implements Metamodel {
 
 	private final Map<String, IdGenerator> generators;
 
-	public MetamodelImpl(List<Class<?>> classes) {
+	public Metamodel(List<Class<?>> classes) {
 		Map<Class<?>, ManagedType<?>> managedTypeMap = new HashMap<>();
 
 		Set<ManagedType<?>> managedTypes = new HashSet<>();
@@ -93,21 +89,21 @@ public class MetamodelImpl implements Metamodel {
 		}
 
 		if (entity != null) {
-			return new EntityTypeImpl<>(this, javaType, entity.name());
+			return new EntityType<>(this, javaType, entity.name());
 		}
 
 		if (embeddable != null) {
-			return new EmbeddableTypeImpl<>(this, javaType);
+			return new EmbeddableType<>(this, javaType);
 		}
 
 		if (mappedSuperclass != null) {
-			return new MappedSuperclassTypeImpl<>(this, javaType);
+			return new MappedSuperclassType<>(this, javaType);
 		}
 
 		throw new IllegalArgumentException(javaType + " is not properly annotated as managed type");
 	}
 
-	@Override @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public <X> ManagedType<X> managedType(Class<X> cls) {
 		ManagedType<?> managedType = managedTypeMap.get(cls);
 		if (managedType == null) {
@@ -116,7 +112,6 @@ public class MetamodelImpl implements Metamodel {
 		return (ManagedType<X>) managedType;
 	}
 
-	@Override
 	public <X> EntityType<X> entity(Class<X> cls) {
 		ManagedType<X> managedType = managedType(cls);
 		try {
@@ -126,7 +121,6 @@ public class MetamodelImpl implements Metamodel {
 		}
 	}
 
-	@Override
 	public <X> EmbeddableType<X> embeddable(Class<X> cls) {
 		ManagedType<X> managedType = managedType(cls);
 		try {
@@ -136,17 +130,14 @@ public class MetamodelImpl implements Metamodel {
 		}
 	}
 
-	@Override
 	public Set<ManagedType<?>> getManagedTypes() {
 		return managedTypes;
 	}
 
-	@Override
 	public Set<EntityType<?>> getEntities() {
 		return entities;
 	}
 
-	@Override
 	public Set<EmbeddableType<?>> getEmbeddables() {
 		return embeddables;
 	}

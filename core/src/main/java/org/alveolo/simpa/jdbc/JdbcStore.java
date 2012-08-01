@@ -19,16 +19,15 @@ import javax.persistence.Id;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.metamodel.Attribute;
-import javax.persistence.metamodel.Attribute.PersistentAttributeType;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.ManagedType;
 import javax.sql.DataSource;
 
 import org.alveolo.simpa.EntityStore;
-import org.alveolo.simpa.metamodel.AttributeImpl;
-import org.alveolo.simpa.metamodel.MetamodelImpl;
-import org.alveolo.simpa.metamodel.SingularAttributeImpl;
+import org.alveolo.simpa.metamodel.Attribute;
+import org.alveolo.simpa.metamodel.Attribute.PersistentAttributeType;
+import org.alveolo.simpa.metamodel.EntityType;
+import org.alveolo.simpa.metamodel.ManagedType;
+import org.alveolo.simpa.metamodel.Metamodel;
+import org.alveolo.simpa.metamodel.SingularAttribute;
 import org.alveolo.simpa.query.AttrSelect;
 import org.alveolo.simpa.query.Conjunction;
 import org.alveolo.simpa.query.Group;
@@ -45,15 +44,15 @@ public class JdbcStore implements EntityStore, RawCallbacks, QueryCallbacks {
 	protected final DefaultNaming naming = new DefaultNaming();
 
 	protected final DataSource ds;
-	protected final MetamodelImpl metamodel;
+	protected final Metamodel metamodel;
 
 	public JdbcStore(DataSource ds, List<Class<?>> classes) {
 		this.ds = ds;
-		this.metamodel = new MetamodelImpl(classes);
+		this.metamodel = new Metamodel(classes);
 	}
 
 	@Override
-	public MetamodelImpl getMetamodel() {
+	public Metamodel getMetamodel() {
 		return metamodel;
 	}
 
@@ -103,7 +102,7 @@ public class JdbcStore implements EntityStore, RawCallbacks, QueryCallbacks {
 				continue;
 			}
 
-			SingularAttributeImpl<?, ?> attribute = (SingularAttributeImpl<?, ?>) av.attribute;
+			SingularAttribute<?, ?> attribute = (SingularAttribute<?, ?>) av.attribute;
 			if (!attribute.isId()) {
 				continue;
 			}
@@ -493,13 +492,13 @@ public class JdbcStore implements EntityStore, RawCallbacks, QueryCallbacks {
 				Object value = EntityUtil.getValue(attribute, object);
 
 				if (attribute.getPersistentAttributeType() == PersistentAttributeType.EMBEDDED) {
-					SingularAttributeImpl<?, ?> singular = (SingularAttributeImpl<?, ?>) attribute;
+					SingularAttribute<?, ?> singular = (SingularAttribute<?, ?>) attribute;
 					ManagedType<?> t = (ManagedType<?>) singular.getType();
 					addInsertableValues(values, t, value);
 					continue;
 				}
 
-				GeneratedValue generated = ((AttributeImpl<?, ?>) attribute).getAnnotation(GeneratedValue.class);
+				GeneratedValue generated = ((Attribute<?, ?>) attribute).getAnnotation(GeneratedValue.class);
 				if (generated != null) {
 					IdGenerator generator = metamodel.getGenerator(generated.generator());
 					Field field = (Field) attribute.getJavaMember(); // TODO: method
@@ -524,7 +523,7 @@ public class JdbcStore implements EntityStore, RawCallbacks, QueryCallbacks {
 				Object value = EntityUtil.getValue(attribute, object);
 
 				if (attribute.getPersistentAttributeType() == PersistentAttributeType.EMBEDDED) {
-					SingularAttributeImpl<?, ?> singular = (SingularAttributeImpl<?, ?>) attribute;
+					SingularAttribute<?, ?> singular = (SingularAttribute<?, ?>) attribute;
 					ManagedType<?> t = (ManagedType<?>) singular.getType();
 					addUpdatableValues(values, t, value);
 					continue;
@@ -595,7 +594,7 @@ public class JdbcStore implements EntityStore, RawCallbacks, QueryCallbacks {
 
 	private boolean isInsertable(Attribute<?, ?> attribute) {
 		// TODO: Support for plural etc.
-		SingularAttributeImpl<?, ?> singular = (SingularAttributeImpl<?, ?>) attribute;
+		SingularAttribute<?, ?> singular = (SingularAttribute<?, ?>) attribute;
 
 		Column column = singular.getAnnotation(Column.class);
 		if (column != null) {
@@ -607,7 +606,7 @@ public class JdbcStore implements EntityStore, RawCallbacks, QueryCallbacks {
 
 	private boolean isUpdatable(Attribute<?, ?> attribute) {
 		// TODO: Support for plural etc.
-		SingularAttributeImpl<?, ?> singular = (SingularAttributeImpl<?, ?>) attribute;
+		SingularAttribute<?, ?> singular = (SingularAttribute<?, ?>) attribute;
 
 		if (singular.getAnnotation(Id.class) != null || singular.getAnnotation(EmbeddedId.class) != null) {
 			return false;

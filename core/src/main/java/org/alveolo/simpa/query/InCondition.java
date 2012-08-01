@@ -2,7 +2,7 @@ package org.alveolo.simpa.query;
 
 import java.util.Collection;
 
-import javax.persistence.metamodel.Attribute;
+import org.alveolo.simpa.metamodel.Attribute;
 
 
 public class InCondition implements Condition {

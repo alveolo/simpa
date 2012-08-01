@@ -15,7 +15,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.PersistenceException;
 import javax.persistence.Temporal;
-import javax.persistence.metamodel.Attribute;
+
+import org.alveolo.simpa.metamodel.Attribute;
 
 
 public class JdbcUtil {
