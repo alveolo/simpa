@@ -5,7 +5,7 @@ import java.util.List;
 import org.alveolo.simpa.jdbc.QueryCallbacks;
 
 
-public class JunctionBuilder<B extends ConditionBuilder<B,T>, T>
+public class JunctionBuilder<B extends BaseJunctionBuilder<B,T>, T>
 extends BaseJunctionBuilder<JunctionBuilder<B, T>, T> {
 	private final B builder;
 	private final List<Condition> conditions;
@@ -21,18 +21,14 @@ extends BaseJunctionBuilder<JunctionBuilder<B, T>, T> {
 		return conditions;
 	}
 
+	@SuppressWarnings("unchecked")
 	public JunctionBuilder<B, T> conjunction() {
-		return builder(new Conjunction());
+		return builder(builder, new Conjunction());
 	}
 
+	@SuppressWarnings("unchecked")
 	public JunctionBuilder<B, T> disjunction() {
-		return builder(new Disjunction());
-	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private JunctionBuilder<B, T> builder(Junction junction) {
-		getConditions().add(junction);
-		return new JunctionBuilder(callbacks, builder, junction.conditions);
+		return builder(builder, new Disjunction());
 	}
 
 	public B end() {

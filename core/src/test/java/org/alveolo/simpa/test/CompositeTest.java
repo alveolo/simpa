@@ -103,7 +103,7 @@ public class CompositeTest extends AbstractQueryTest {
 	@Test
 	public void findEntity() throws SQLException {
 		sql("SELECT long_id,enum_id,enum_default,enum_string,enum_ordinal" +
-				" FROM sch_test.tbl_composite WHERE long_id=? AND enum_id=?");
+				" FROM sch_test.tbl_composite WHERE (long_id=? AND enum_id=?)");
 		param(123L);
 		param("THREE");
 		results();
@@ -126,9 +126,9 @@ public class CompositeTest extends AbstractQueryTest {
 	}
 
 	@Test
-	public void fromEntityById() throws SQLException {
+	public void fromEntityByEqId() throws SQLException {
 		sql("SELECT long_id,enum_id,enum_default,enum_string,enum_ordinal" +
-			" FROM sch_test.tbl_composite WHERE long_id=? AND enum_id=?");
+			" FROM sch_test.tbl_composite WHERE (long_id=? AND enum_id=?)");
 		param(123L);
 		param("THREE");
 		results();
@@ -139,6 +139,36 @@ public class CompositeTest extends AbstractQueryTest {
 
 		List<CompositeEnum> list = es.from(CompositeEnum.class)
 				.eq("id", new CompositeEnumPK(123L, BasicEnum.THREE))
+				.list();
+
+		Assert.assertEquals(1, list.size());
+
+		CompositeEnum entity = list.get(0);
+
+		CompositeEnumPK id = entity.getId();
+		Assert.assertEquals(123L, id.getLongId());
+		Assert.assertEquals(BasicEnum.THREE, id.getEnumId());
+		Assert.assertEquals(BasicEnum.ONE, entity.getEnumDefault());
+		Assert.assertEquals(BasicEnum.DFLT, entity.getEnumString());
+		Assert.assertEquals(BasicEnum.TWO, entity.getEnumOrdinal());
+
+		verify();
+	}
+
+	@Test
+	public void fromEntityByNeqId() throws SQLException {
+		sql("SELECT long_id,enum_id,enum_default,enum_string,enum_ordinal" +
+			" FROM sch_test.tbl_composite WHERE (long_id!=? OR enum_id!=?)");
+		param(123L);
+		param("THREE");
+		results();
+		next(); number(123L); string("THREE"); number(1); string("DFLT"); number(2);
+		endQuery();
+
+		replay();
+
+		List<CompositeEnum> list = es.from(CompositeEnum.class)
+				.neq("id", new CompositeEnumPK(123L, BasicEnum.THREE))
 				.list();
 
 		Assert.assertEquals(1, list.size());
