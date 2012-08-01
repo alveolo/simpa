@@ -10,6 +10,7 @@ import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.ManagedType;
 import javax.persistence.metamodel.SingularAttribute;
 
+import org.alveolo.simpa.Page;
 import org.alveolo.simpa.jdbc.QueryCallbacks;
 import org.alveolo.simpa.util.EntityUtil;
 
@@ -57,6 +58,16 @@ public class BaseBuilder<T> {
 		query.fetch = fetch;
 
 		return list();
+	}
+
+	public Page<T> page(int offset, int fetch) {
+		// TODO: not implemented
+		throw new NoSuchMethodError("not implemented");
+	}
+
+	public Page<T> page(int offset, int fetch, int maxSize) {
+		// TODO: not implemented
+		throw new NoSuchMethodError("not implemented");
 	}
 
 	public Map<?, T> map() {
