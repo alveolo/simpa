@@ -1,6 +1,6 @@
 package org.alveolo.simpa.test;
 
-import javax.persistence.Column;
+import org.alveolo.simpa.Column;
 
 
 class RawValue {

@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>org.alveolo.simpa</groupId>
 		<artifactId>simpa</artifactId>
-		<version>0.1-SNAPSHOT</version>
+		<version>0.2-SNAPSHOT</version>
 	</parent>
 
 	<name>SimPA Core - Simple Persistence API for Java</name>
@@ -48,8 +48,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

@@ -4,10 +4,9 @@ import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 
-import javax.persistence.SequenceGenerator;
-
 import junit.framework.Assert;
 
+import org.alveolo.simpa.SequenceGenerator;
 import org.alveolo.simpa.jdbc.JdbcSequenceGenerator;
 import org.alveolo.simpa.jdbc.JdbcStore;
 import org.alveolo.simpa.test.beans.Simple;

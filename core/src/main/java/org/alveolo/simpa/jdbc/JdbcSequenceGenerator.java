@@ -1,8 +1,7 @@
 package org.alveolo.simpa.jdbc;
 
-import javax.persistence.SequenceGenerator;
-
 import org.alveolo.simpa.EntityStore;
+import org.alveolo.simpa.SequenceGenerator;
 
 
 public class JdbcSequenceGenerator extends IdGenerator {

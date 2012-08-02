@@ -9,8 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.PersistenceException;
-
+import org.alveolo.simpa.PersistenceException;
 import org.alveolo.simpa.metamodel.Attribute;
 import org.alveolo.simpa.metamodel.EntityType;
 

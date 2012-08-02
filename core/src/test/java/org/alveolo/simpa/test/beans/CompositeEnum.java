@@ -1,13 +1,13 @@
 package org.alveolo.simpa.test.beans;
 
-import static javax.persistence.EnumType.ORDINAL;
-import static javax.persistence.EnumType.STRING;
+import static org.alveolo.simpa.EnumType.ORDINAL;
+import static org.alveolo.simpa.EnumType.STRING;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import org.alveolo.simpa.Column;
+import org.alveolo.simpa.EmbeddedId;
+import org.alveolo.simpa.Entity;
+import org.alveolo.simpa.Enumerated;
+import org.alveolo.simpa.Table;
 
 
 @Entity @Table(schema="sch_test", name="tbl_composite")
@@ -19,7 +19,7 @@ public class CompositeEnum {
 	private BasicEnum enumDefault;
 
 	@Enumerated(STRING)
-	@Column(name="enum_string", columnDefinition="bpchar")
+	@Column(name="enum_string")
 	private BasicEnum enumString;
 
 	@Enumerated(ORDINAL)

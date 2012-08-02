@@ -3,8 +3,8 @@ package org.alveolo.simpa.metamodel;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Id;
+import org.alveolo.simpa.EmbeddedId;
+import org.alveolo.simpa.Id;
 
 
 public abstract class IdentifiableType<X> extends ManagedType<X> {

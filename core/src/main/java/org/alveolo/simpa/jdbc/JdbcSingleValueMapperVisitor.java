@@ -7,8 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.persistence.PersistenceException;
-
+import org.alveolo.simpa.PersistenceException;
 import org.alveolo.simpa.metamodel.Attribute;
 import org.alveolo.simpa.metamodel.Attribute.PersistentAttributeType;
 import org.alveolo.simpa.metamodel.ManagedType;

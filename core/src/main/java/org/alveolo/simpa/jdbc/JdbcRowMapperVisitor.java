@@ -5,8 +5,7 @@ import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.persistence.PersistenceException;
-
+import org.alveolo.simpa.PersistenceException;
 import org.alveolo.simpa.metamodel.Attribute;
 import org.alveolo.simpa.metamodel.Attribute.PersistentAttributeType;
 import org.alveolo.simpa.metamodel.ManagedType;

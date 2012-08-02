@@ -2,13 +2,11 @@ package org.alveolo.simpa.metamodel;
 
 import java.lang.reflect.Member;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Id;
-import javax.persistence.PersistenceException;
-import javax.persistence.Temporal;
-import javax.persistence.Version;
+import org.alveolo.simpa.Embedded;
+import org.alveolo.simpa.EmbeddedId;
+import org.alveolo.simpa.Id;
+import org.alveolo.simpa.PersistenceException;
+import org.alveolo.simpa.Temporal;
 
 
 public class SingularAttribute<X, T> extends Attribute<X, T> implements Bindable<T> {
@@ -39,15 +37,6 @@ public class SingularAttribute<X, T> extends Attribute<X, T> implements Bindable
 
 	public boolean isId() {
 		return getAnnotation(Id.class) != null || getAnnotation(EmbeddedId.class) != null;
-	}
-
-	public boolean isVersion() {
-		return getAnnotation(Version.class) != null;
-	}
-
-	public boolean isOptional() {
-		Column column = getAnnotation(Column.class);
-		return (column == null) ? true : column.nullable();
 	}
 
 	public Type<T> getType() {

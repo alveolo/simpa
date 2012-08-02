@@ -7,12 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PersistenceException;
-import javax.persistence.SequenceGenerator;
-
+import org.alveolo.simpa.Embeddable;
+import org.alveolo.simpa.Entity;
+import org.alveolo.simpa.MappedSuperclass;
+import org.alveolo.simpa.PersistenceException;
+import org.alveolo.simpa.SequenceGenerator;
 import org.alveolo.simpa.jdbc.IdGenerator;
 import org.alveolo.simpa.jdbc.JdbcSequenceGenerator;
 import org.alveolo.simpa.jdbc.UuidGenerator;

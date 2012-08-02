@@ -10,8 +10,8 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.PersistenceException;
-import javax.persistence.Transient;
+import org.alveolo.simpa.PersistenceException;
+import org.alveolo.simpa.Transient;
 
 
 public abstract class ManagedType<X> extends Type<X> {

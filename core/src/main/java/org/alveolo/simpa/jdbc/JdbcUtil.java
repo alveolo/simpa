@@ -11,11 +11,10 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Calendar;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.PersistenceException;
-import javax.persistence.Temporal;
-
+import org.alveolo.simpa.EnumType;
+import org.alveolo.simpa.Enumerated;
+import org.alveolo.simpa.PersistenceException;
+import org.alveolo.simpa.Temporal;
 import org.alveolo.simpa.metamodel.Attribute;
 
 

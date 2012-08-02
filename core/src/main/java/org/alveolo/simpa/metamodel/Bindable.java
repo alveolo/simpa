@@ -17,10 +17,9 @@ package org.alveolo.simpa.metamodel;
 
 /**
  * Instances of the type <code>Bindable</code> represent object or attribute types
- * that can be bound into a {@link javax.persistence.criteria.Path Path}.
+ * that can be bound into a {@link org.alveolo.simpa.criteria.Path Path}.
  *
  * @param <T>  The type of the represented object or attribute
- * @since Java Persistence 2.0
  */
 public interface Bindable<T> {
 	public static enum BindableType {

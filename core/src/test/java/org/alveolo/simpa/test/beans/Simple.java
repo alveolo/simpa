@@ -1,12 +1,12 @@
 package org.alveolo.simpa.test.beans;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import org.alveolo.simpa.Column;
+import org.alveolo.simpa.Entity;
+import org.alveolo.simpa.GeneratedValue;
+import org.alveolo.simpa.GenerationType;
+import org.alveolo.simpa.Id;
+import org.alveolo.simpa.SequenceGenerator;
+import org.alveolo.simpa.Table;
 
 
 @Entity @Table(schema="sch_test", name="tbl_simple")

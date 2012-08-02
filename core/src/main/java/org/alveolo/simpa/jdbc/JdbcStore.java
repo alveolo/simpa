@@ -11,17 +11,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NonUniqueResultException;
-import javax.persistence.PersistenceException;
-import javax.persistence.SequenceGenerator;
 import javax.sql.DataSource;
 
+import org.alveolo.simpa.Column;
+import org.alveolo.simpa.EmbeddedId;
+import org.alveolo.simpa.EntityNotFoundException;
 import org.alveolo.simpa.EntityStore;
+import org.alveolo.simpa.GeneratedValue;
+import org.alveolo.simpa.Id;
+import org.alveolo.simpa.NonUniqueResultException;
+import org.alveolo.simpa.PersistenceException;
+import org.alveolo.simpa.SequenceGenerator;
 import org.alveolo.simpa.metamodel.Attribute;
 import org.alveolo.simpa.metamodel.Attribute.PersistentAttributeType;
 import org.alveolo.simpa.metamodel.EntityType;

@@ -5,10 +5,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
-import javax.persistence.Column;
-import javax.persistence.PersistenceException;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import org.alveolo.simpa.Column;
+import org.alveolo.simpa.PersistenceException;
+import org.alveolo.simpa.SequenceGenerator;
+import org.alveolo.simpa.Table;
 
 
 public class DefaultNaming {

@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
-import javax.persistence.Embeddable;
+import org.alveolo.simpa.Embeddable;
 
 
 public class Attribute<X, Y> {

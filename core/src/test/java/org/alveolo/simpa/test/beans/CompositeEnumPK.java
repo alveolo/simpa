@@ -1,23 +1,27 @@
 package org.alveolo.simpa.test.beans;
 
-import static javax.persistence.EnumType.STRING;
+import static org.alveolo.simpa.EnumType.STRING;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
+
+import org.alveolo.simpa.Column;
+import org.alveolo.simpa.Embeddable;
+import org.alveolo.simpa.Enumerated;
 
 
 @Embeddable
 public class CompositeEnumPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="long_id", nullable=false, updatable=false)
+	@NotNull
+	@Column(name="long_id", updatable=false)
 	private long longId;
 
+	@NotNull
 	@Enumerated(STRING)
-	@Column(name="enum_id", nullable=false, updatable=false, columnDefinition="bpchar")
+	@Column(name="enum_id", updatable=false)
 	private BasicEnum enumId;
 
 	/** Required by SimPA/JPA */
