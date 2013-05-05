@@ -35,6 +35,23 @@ public abstract class ManagedType<X> extends Type<X> {
 		Set<Attribute<? super X, ?>> attributes = new LinkedHashSet<>();
 		Set<SingularAttribute<? super X, ?>> singularAttributes = new LinkedHashSet<>();
 
+		addAttributes(javaType, attributes, singularAttributes);
+
+		// TODO: Support for annotated getters and property access type, analyze superclass
+
+		this.attributes = Collections.unmodifiableSet(attributes);
+		this.singularAttributes = Collections.unmodifiableSet(singularAttributes);
+	}
+
+	private void addAttributes(Class<?> javaType,
+			Set<Attribute<? super X, ?>> attributes, Set<SingularAttribute<? super X, ?>> singularAttributes) {
+		Class<?> superclass = javaType.getSuperclass();
+		if (superclass == null) {
+			return;
+		}
+
+		addAttributes(superclass, attributes, singularAttributes);
+
 		for (Field field : javaType.getDeclaredFields()) {
 			if (isSyntheticStaticOrTransient(field)) {
 				continue;
@@ -46,11 +63,6 @@ public abstract class ManagedType<X> extends Type<X> {
 			attributes.add(attribute);
 			singularAttributes.add(attribute);
 		}
-
-		// TODO: Support for annotated getters and property access type, analyze superclass
-
-		this.attributes = Collections.unmodifiableSet(attributes);
-		this.singularAttributes = Collections.unmodifiableSet(singularAttributes);
 	}
 
 	public Metamodel getMetamodel() {

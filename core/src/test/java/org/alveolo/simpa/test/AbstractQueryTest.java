@@ -15,6 +15,7 @@ import org.alveolo.simpa.EntityStore;
 import org.alveolo.simpa.jdbc.JdbcStore;
 import org.alveolo.simpa.test.beans.CompositeEnum;
 import org.alveolo.simpa.test.beans.CompositeEnumPK;
+import org.alveolo.simpa.test.beans.Extended;
 import org.alveolo.simpa.test.beans.Simple;
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -41,7 +42,9 @@ public class AbstractQueryTest {
 		stmt = createMock(PreparedStatement.class);
 		rset = createMock(ResultSet.class);
 
-		List<Class<?>> classes = Arrays.asList(Simple.class, CompositeEnum.class, CompositeEnumPK.class);
+		List<Class<?>> classes = Arrays.asList(
+				Simple.class, Extended.class,
+				CompositeEnum.class, CompositeEnumPK.class);
 
 		es = new JdbcStore(ds, classes);
 	}
