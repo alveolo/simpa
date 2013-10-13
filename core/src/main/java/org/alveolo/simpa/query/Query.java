@@ -16,6 +16,7 @@ public class Query<T> {
 
 	public Integer offset;
 	public Integer fetch;
+	public Integer maxSize;
 
 	public Query(Class<T> type) {
 		this.type = type;

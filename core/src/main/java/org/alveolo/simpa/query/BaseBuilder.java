@@ -60,13 +60,16 @@ public class BaseBuilder<T> {
 	}
 
 	public Page<T> page(int offset, int fetch) {
-		// TODO: not implemented
-		throw new NoSuchMethodError("not implemented");
+		query.offset = offset;
+		query.fetch = fetch;
+
+		return callbacks.page(query);
 	}
 
 	public Page<T> page(int offset, int fetch, int maxSize) {
-		// TODO: not implemented
-		throw new NoSuchMethodError("not implemented");
+		query.maxSize = maxSize;
+
+		return page(offset, fetch);
 	}
 
 	public Map<?, T> map() {

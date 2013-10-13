@@ -20,6 +20,7 @@ import org.alveolo.simpa.EntityStore;
 import org.alveolo.simpa.GeneratedValue;
 import org.alveolo.simpa.Id;
 import org.alveolo.simpa.NonUniqueResultException;
+import org.alveolo.simpa.Page;
 import org.alveolo.simpa.PersistenceException;
 import org.alveolo.simpa.SequenceGenerator;
 import org.alveolo.simpa.metamodel.Attribute;
@@ -466,6 +467,93 @@ public class JdbcStore implements EntityStore, RawCallbacks, QueryCallbacks {
 		}
 
 		return list;
+	}
+
+	@Override
+	public <T> Page<T> page(Query<T> query) {
+		EntityType<T> type = metamodel.entity(query.type);
+
+		StringBuilder sql = new StringBuilder();
+
+		List<Select> select = query.select;
+		if (select == null) {
+			select = new ArrayList<>();
+			for (Attribute<? super T, ?> a : type.getAttributes()) {
+				select.add(new AttrSelect(a));
+			}
+		}
+
+		{
+			JdbcSqlAppendVisitor visitor = new JdbcSqlAppendVisitor(sql);
+
+			appendSelectSection(visitor, select);
+			sql.append(",COUNT(*) OVER() __count_over");
+			appendFromSection(visitor, type);
+			appendWhereSection(visitor, query.where);
+			appendGroupBySection(visitor, query.groups);
+			appendHavingSection(visitor, query.having);
+			appendOrderBySection(visitor, query.order);
+		}
+
+		if (query.offset != null) {
+			sql.append(" OFFSET " + query.offset);
+		}
+
+		if (query.fetch != null) {
+			sql.append(" LIMIT " + query.fetch);
+		}
+
+		List<T> list = new ArrayList<>();
+		int countOver = 0;
+
+		try {
+			Connection con = acquireConnection();
+			try {
+				PreparedStatement stmt = con.prepareStatement(sql.toString());
+				try {
+					JdbcSetParameterVisitor visitor = new JdbcSetParameterVisitor(stmt);
+
+					query.where.accept(visitor);
+					for (Group g : query.groups) g.accept(visitor);
+					query.having.accept(visitor);
+					for (Order o : query.order) o.accept(visitor);
+
+					ResultSet rset = stmt.executeQuery();
+					try {
+						JdbcRowMapperVisitor<T> results = (query.select != null && select.size() == 1)
+								? new JdbcSingleValueMapperVisitor<>(rset, type.getJavaType())
+								: new JdbcRowMapperVisitor<>(rset, type.getJavaType());
+
+						while (rset.next()) {
+							for (Select s : select) s.accept(results);
+							countOver = results.getCountOver();
+
+//							if (query.select != null && select.size() == 1) {
+//								Select s = select.iterator().next();
+//								AttrSelect as = (AttrSelect) s;
+//								@SuppressWarnings("unchecked") // A hack, Path<X> should fix type problems
+//								T value = (T) EntityUtil.getValue(as.attribute, results.getEntity());
+//								list.add(value);
+//							} else {
+								list.add(results.getEntity());
+//							}
+
+							results.reset();
+						}
+					} finally {
+						rset.close();
+					}
+				} finally {
+					stmt.close();
+				}
+			} finally {
+				releaseConnection(con);
+			}
+		} catch (SQLException e) {
+			throw new PersistenceException(e);
+		}
+
+		return new Page<>(list, countOver);
 	}
 
 	protected Connection acquireConnection() throws SQLException {

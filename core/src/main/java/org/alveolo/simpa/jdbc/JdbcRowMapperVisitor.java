@@ -94,4 +94,15 @@ public class JdbcRowMapperVisitor<T> implements SelectVisitor {
 			throw new PersistenceException(e);
 		}
 	}
+
+	/**
+	 * Must only be called exactly after all visits have passed.
+	 */ 
+	public int getCountOver() {
+		try {
+			return rset.getInt(++index);
+		} catch (SQLException e) {
+			throw new PersistenceException(e);
+		}
+	}
 }
