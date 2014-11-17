@@ -5,52 +5,32 @@ import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
+import java.util.Collection;
 
+import org.alveolo.simpa.Array;
 import org.alveolo.simpa.Embeddable;
+import org.alveolo.simpa.PersistenceException;
 
 
 public class Attribute<X, Y> {
 	public static enum PersistentAttributeType {
-		/**
-		 * Many-to-one association
-		 */
-		MANY_TO_ONE,
+		/* TODO: Many-to-one, One-to-one, Many-to-many, One-to-many association */
 
-		/**
-		 * One-to-one association
-		 */
-		ONE_TO_ONE,
-
-		/**
-		 * Basic attribute
-		 */
+		/** Basic attribute */
 		BASIC,
 
-		/**
-		 * Embeddable class attribute
-		 */
+		/** Array attribute */
+		ARRAY,
+
+		/** Embedded class attribute */
 		EMBEDDED,
-
-		/**
-		 * Many-to-many association
-		 */
-		MANY_TO_MANY,
-
-		/**
-		 * One-to-many association
-		 */
-		ONE_TO_MANY,
-
-		/**
-		 * Element collection
-		 */
-		ELEMENT_COLLECTION
 	}
 
 	protected final ManagedType<X> declaringType;
 	protected final Member javaMember;
 	protected final String name;
 	protected final Class<Y> javaType;
+	protected final java.lang.reflect.Type genericType;
 	protected final PersistentAttributeType persistentAttributeType;
 
 	@SuppressWarnings("unchecked")
@@ -70,13 +50,25 @@ public class Attribute<X, Y> {
 
 		if (javaMember instanceof Field) {
 			javaType = (Class<Y>) ((Field) javaMember).getType();
+			genericType = ((Field) javaMember).getGenericType();
 		} else {
 			javaType = (Class<Y>) ((Method) javaMember).getReturnType();
+			genericType = ((Method) javaMember).getGenericReturnType();
 		}
 
-		if (javaType.getAnnotation(Embeddable.class) != null) {
+		if (getAnnotation(Array.class) != null) {
+			if (!Collection.class.isAssignableFrom(javaType)) {
+				if (!javaType.isArray()) {
+					throw new PersistenceException(javaMember.getName() + " is not a collection type!");
+				}
+			}
+			persistentAttributeType = PersistentAttributeType.ARRAY;
+		} else if (javaType.getAnnotation(Embeddable.class) != null) {
 			persistentAttributeType = PersistentAttributeType.EMBEDDED;
 		} else {
+			if (Collection.class.isAssignableFrom(javaType)) {
+				throw new PersistenceException(javaMember.getName() + " is a collection type! Have you missed the @Array annotation?");
+			}
 			persistentAttributeType = PersistentAttributeType.BASIC;
 		}
 	}
@@ -99,6 +91,10 @@ public class Attribute<X, Y> {
 
 	public Class<Y> getJavaType() {
 		return javaType;
+	}
+	
+	public java.lang.reflect.Type getGenericType() {
+		return genericType;
 	}
 
 	public Member getJavaMember() {

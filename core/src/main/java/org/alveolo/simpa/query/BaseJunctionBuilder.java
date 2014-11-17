@@ -106,6 +106,24 @@ public abstract class BaseJunctionBuilder<B extends BaseJunctionBuilder<B, T>, T
 		return builder();
 	}
 
+	public B contains(String path, Object... value) {
+		return contains(path, Arrays.asList(value));
+	}
+
+	public B contains(String path, Collection<?> values) {
+		getConditions().add(new AttrCondition("@>", getPath(path), values));
+		return builder();
+	}
+
+	public B containedBy(String path, Object... value) {
+		return containedBy(path, Arrays.asList(value));
+	}
+
+	public B containedBy(String path, Collection<?> values) {
+		getConditions().add(new AttrCondition("<@", getPath(path), values));
+		return builder();
+	}
+
 	public B isNull(String path) {
 		getConditions().add(new IsNullCondition(getPath(path)));
 		return builder();

@@ -98,6 +98,7 @@ public class JdbcStore implements EntityStore, RawCallbacks, QueryCallbacks {
 
 		List<AttributeValue> values = getInsertableValues(type, entity);
 
+		// TODO: Is there something useful in the loop? Seems like a no-op!
 		for (AttributeValue av : values) {
 			if (av.attribute.getPersistentAttributeType() != PersistentAttributeType.BASIC) {
 				continue;

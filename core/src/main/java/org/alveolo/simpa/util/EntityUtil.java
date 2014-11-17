@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.alveolo.simpa.PersistenceException;
 import org.alveolo.simpa.metamodel.Attribute;
-import org.alveolo.simpa.metamodel.Attribute.PersistentAttributeType;
 import org.alveolo.simpa.metamodel.EntityType;
 import org.alveolo.simpa.metamodel.ManagedType;
 import org.alveolo.simpa.metamodel.SingularAttribute;
@@ -74,14 +73,19 @@ public class EntityUtil {
 	private static void addConditions(Conjunction conjunction, SingularAttribute<?, ?> attribute, Object value) {
 		List<Condition> conditions = conjunction.conditions;
 
-		if (attribute.getPersistentAttributeType() == PersistentAttributeType.EMBEDDED) {
+		switch (attribute.getPersistentAttributeType()) {
+		case EMBEDDED:
 			@SuppressWarnings("unchecked")
 			ManagedType<Object> type = (ManagedType<Object>) attribute.getType();
 			for (Attribute<?, ?> a : type.getAttributes()) {
 				conditions.add(new AttrCondition("=", a, EntityUtil.getValue(a, value)));
 			}
-		} else {
+			break;
+		case BASIC:
 			conditions.add(new AttrCondition("=", attribute, value));
+			break;
+		default:
+			throw new PersistenceException("Not implemented: " + attribute.getPersistentAttributeType());
 		}
 	}
 }

@@ -9,6 +9,10 @@ public class AttrCondition implements Condition {
 	public Object value;
 
 	public AttrCondition(String op, Attribute<?, ?> attribute, Object value) {
+		if (op == null) {
+			throw new NullPointerException("op");
+		}
+
 		if (attribute == null) {
 			throw new NullPointerException("attribute");
 		}
