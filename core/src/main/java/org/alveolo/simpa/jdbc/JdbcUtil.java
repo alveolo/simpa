@@ -135,7 +135,7 @@ public class JdbcUtil {
 			}
 			return;
 		}
-		
+
 		stmt.setObject(index, jdbcValue);
 	}
 
@@ -162,12 +162,14 @@ public class JdbcUtil {
 
 		if (jdbcType.isAssignableFrom(Array.class)) {
 			Array array = rset.getArray(index);
-			if (array != null) {
-				try {
-					return array.getArray();
-				} finally {
-					array.free();
-				}
+			if (array == null) {
+				return null;
+			}
+
+			try {
+				return array.getArray();
+			} finally {
+				array.free();
 			}
 		}
 

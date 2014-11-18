@@ -96,7 +96,7 @@ public class SimpleArrayTest extends AbstractQueryTest {
 		next(); number(123L);
 		stringArray("String1", "String2");
 		numberArray(123L, null, 456L);
-		numberArray(78, 90);
+		nullArray();
 		stringArray("Collection1", "Collection2");
 		stringArray("List1", "List2");
 		stringArray("Set1", "Set2");
@@ -111,7 +111,7 @@ public class SimpleArrayTest extends AbstractQueryTest {
 		Assert.assertEquals(123L, entity.getId());
 		Assert.assertArrayEquals(new String[] {"String1", "String2"}, entity.getStrings());
 		Assert.assertArrayEquals(new Long[] {123L, null, 456L}, entity.getLongs());
-		Assert.assertArrayEquals(new int[] {78, 90}, entity.getInts());
+		Assert.assertNull(entity.getInts());
 		Assert.assertEquals(new ArrayList<String>(Arrays.asList("Collection1", "Collection2")), entity.getCollection());
 		Assert.assertEquals(new ArrayList<String>(Arrays.asList("List1", "List2")), entity.getList());
 		Assert.assertEquals(new LinkedHashSet<String>(Arrays.asList("Set1", "Set2")), entity.getSet());
@@ -134,7 +134,7 @@ public class SimpleArrayTest extends AbstractQueryTest {
 		stringArray("Collection1", "Collection2");
 		stringArray("List1", "List2");
 		stringArray("Set1", "Set2");
-		numberArray(null, 34, 56);
+		nullArray();
 		endQuery();
 
 		replay();
@@ -152,7 +152,7 @@ public class SimpleArrayTest extends AbstractQueryTest {
 		Assert.assertEquals(new ArrayList<String>(Arrays.asList("Collection1", "Collection2")), entity.getCollection());
 		Assert.assertEquals(new ArrayList<String>(Arrays.asList("List1", "List2")), entity.getList());
 		Assert.assertEquals(new LinkedHashSet<String>(Arrays.asList("Set1", "Set2")), entity.getSet());
-		Assert.assertEquals(new ArrayList<Integer>(Arrays.asList(null, 34, 56)), entity.getLinked());
+		Assert.assertNull(entity.getLinked());
 
 		verify();
 	}

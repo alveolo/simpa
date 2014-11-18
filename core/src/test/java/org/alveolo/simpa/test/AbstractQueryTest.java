@@ -128,6 +128,10 @@ public class AbstractQueryTest {
 		EasyMock.replay(array);
 	}
 
+	protected void nullArray() throws SQLException {
+		expect(rset.getArray(++position)).andReturn(null);
+	}
+
 	protected void endQuery() throws SQLException {
 		expect(rset.next()).andReturn(false); position = 0;
 		rset.close();
