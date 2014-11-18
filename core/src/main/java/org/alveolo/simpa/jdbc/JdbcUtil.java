@@ -162,10 +162,12 @@ public class JdbcUtil {
 
 		if (jdbcType.isAssignableFrom(Array.class)) {
 			Array array = rset.getArray(index);
-			try {
-				return array.getArray();
-			} finally {
-				array.free();
+			if (array != null) {
+				try {
+					return array.getArray();
+				} finally {
+					array.free();
+				}
 			}
 		}
 
