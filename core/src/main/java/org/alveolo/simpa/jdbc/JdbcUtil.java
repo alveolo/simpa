@@ -166,11 +166,7 @@ public class JdbcUtil {
 				return null;
 			}
 
-			try {
-				return array.getArray();
-			} finally {
-				array.free();
-			}
+			return array.getArray();
 		}
 
 		return rset.getObject(index);
