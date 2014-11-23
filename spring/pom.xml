@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>org.alveolo.simpa</groupId>
 		<artifactId>simpa</artifactId>
-		<version>0.2.2-SNAPSHOT</version>
+		<version>0.2.3-SNAPSHOT</version>
 	</parent>
 
 	<name>SimPA Spring - Simple Persistence API for Java</name>
@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>org.alveolo.simpa</groupId>
 			<artifactId>simpa-core</artifactId>
-			<version>0.2.2-SNAPSHOT</version>
+			<version>0.2.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

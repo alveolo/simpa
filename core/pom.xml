@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>org.alveolo.simpa</groupId>
 		<artifactId>simpa</artifactId>
-		<version>0.2.2-SNAPSHOT</version>
+		<version>0.2.3-SNAPSHOT</version>
 	</parent>
 
 	<name>SimPA Core - Simple Persistence API for Java</name>
