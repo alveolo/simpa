@@ -126,11 +126,11 @@ public class JdbcUtil {
 		}
 
 		if (jdbcType.isAssignableFrom(Array.class)) {
-			Array array = stmt.getConnection().createArrayOf(
-					getPgType(attribute.getGenericType()), (Object[]) jdbcValue);
 			if (value == null) {
 				stmt.setNull(index, Types.ARRAY);
 			} else {
+				Array array = stmt.getConnection().createArrayOf(
+						getPgType(attribute.getGenericType()), (Object[]) jdbcValue);
 				stmt.setArray(index, array);
 			}
 			return;
